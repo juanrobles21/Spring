@@ -31,9 +31,30 @@ public class FacultadRest {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
     @GetMapping(value = "Listar/{id}")
-    private ResponseEntity<Optional<Facultad>>listarFacultadesById(@PathVariable("id")Long id){
+    private ResponseEntity<Optional<Facultad>> listarFacultadesById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(facultadServicios.findById(id));
     }
+
+    @DeleteMapping("delete/{id}")
+    private ResponseEntity<Void> eliminarFacultad(@PathVariable("id") Long id) {
+        facultadServicios.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("Editar")
+    private ResponseEntity<Facultad> editarFacultades(@RequestBody Facultad facultad) {
+        Facultad temporal = facultadServicios.crearFacultad(facultad);
+        try {
+            return ResponseEntity.created(new URI("/api/facultades/" + temporal.getCodFacultad())).body(facultad);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+    @GetMapping(value = "Contar")
+    private ResponseEntity<Integer> contarFacultades(){
+        return  ResponseEntity.ok(facultadServicios.countTotalFacultades());
+    }
+
 
 }

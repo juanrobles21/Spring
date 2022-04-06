@@ -27,4 +27,15 @@ public class FacultadServicios {
         return facultadRepositorio.findById(id);
     }
 
+    public void deleteById(Long id) {
+        facultadRepositorio.deleteById(id);
+    }
+    //Metodos especificos
+    public Integer countTotalFacultades(){
+        return facultadRepositorio.countTotalFacultades();
+    }
+
+
+
+
 }
